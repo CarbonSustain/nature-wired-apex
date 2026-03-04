@@ -1,0 +1,139 @@
+# Apex Hackathon 2026 — Hackathon Scope (Nature Backers)
+
+## Project Name
+**Nature Backers — Guardian-Powered Engagement Layer for Verified Nature Projects**
+
+## Hackathon Track
+**Theme 3: Sustainability**
+
+## Goal of the Hackathon MVP
+Build and demo a working MVP that showcases Nature Backers as an engagement layer on top of the Hedera Guardian ecosystem, using a fictitious tech event scenario where attendees can browse verified projects, back a project, and receive an on-chain proof-of-participation token/NFT.
+
+This MVP is focused on participation and transparency, not on financial settlement or marketplace flows.
+
+---
+
+## Demo Scenario (Fictitious Event Use Case)
+A tech conference commits to offsetting its event footprint through verified nature-based projects.  
+To increase transparency and attendee engagement, the event invites attendees to participate by exploring verified projects and backing the one they want the event to support.
+
+Attendees interact through a simple mobile-friendly experience (QR onboarding).
+
+---
+
+## Core MVP User Flow (Demo Flow)
+1. User scans event QR code and opens the Nature Backers event page  
+2. User browses verified nature-based sustainability projects  
+3. User views project details (SDGs, location, verification info, impact highlights)  
+4. User selects a project to “Back”  
+5. User connects a wallet (HashPack / Blade / WalletConnect)  
+6. User receives a token/NFT proof-of-participation  
+7. Organizer dashboard updates to show backing results and engagement analytics
+
+---
+
+## Must-Have Features (Hackathon MVP)
+### 1. Event Participation UX (Front End)
+- Event landing page
+- Project browse / listing view
+- Project detail view
+- Back / vote action flow
+- Confirmation view
+
+### 2. Verified Project Data Integration
+- Pull project listings from Guardian Indexer / Global Indexer  
+  OR
+- Use a “lite” integration approach for verified project data if Indexer access is limited
+
+### 3. Wallet Integration (NEW)
+- Wallet connect experience for participants
+- Display connected wallet address / session
+
+### 4. Token / NFT Proof-of-Participation (NEW)
+- Mint or issue a participation token/NFT when a project is backed
+- Token/NFT metadata should include:
+  - Event name
+  - Project name / ID
+  - Timestamp
+  - SDG tags (if available)
+
+### 5. Engagement Analytics Dashboard
+- Live project backing totals
+- Simple leaderboard / ranking view
+- Analytics breakdown by:
+  - Project
+  - SDG
+  - Region (if available)
+
+---
+
+## Nice-to-Have Features (If Time Allows)
+### AI Layer (Optional)
+- AI-based project recommendation based on attendee preferences
+  OR
+- AI-based summary generation (turn project metadata into a short human-readable story)
+
+### Admin / Organizer Export
+- Export backing results to CSV
+- Export simple event report summary
+
+### Multi-Event Support
+- Ability to define an event campaign ID and filter engagement by event
+
+---
+
+## Out of Scope (Explicitly Not Built in Hackathon MVP)
+- Stablecoin settlement or purchasing offsets directly
+- Marketplace flows (buy/sell/retire credits)
+- Compliance or registry integration beyond Guardian project discovery
+- Full identity / KYC onboarding
+- Advanced tokenomics or speculative reward mechanics
+
+---
+
+## Technical Scope Notes
+### Existing Foundation (Reuse)
+This hackathon submission builds on the existing Nature Backers MVP foundation, including:
+- AWS-hosted backend services
+- Existing GitHub codebase and architecture patterns
+- Prior Indexer client work and query documentation
+- Existing UI concepts and Figma designs
+
+### New Development Areas
+Hackathon-specific additions include:
+- Wallet connection workflow
+- HTS token/NFT issuance logic
+- Event-based UX flow implementation
+- Minimal analytics reporting views
+
+---
+
+## Definition of Done (Hackathon Completion Criteria)
+The submission is considered complete if the team can demonstrate:
+
+- A working live deployment with event participation UI
+- Verified project listings visible in the app
+- Wallet connect works end-to-end
+- Backing a project triggers token/NFT issuance
+- Dashboard updates and shows results
+- GitHub repo includes clear documentation + deployment instructions
+- A recorded demo video and pitch deck are included
+
+---
+
+## Expected Submission Artifacts
+- GitHub repo (public)
+- Working demo URL
+- Demo video (YouTube)
+- Pitch deck PDF
+- README with setup + testing instructions
+- Hackathon-specific documentation (this file, architecture notes, etc.)
+
+---
+
+## Post-Hackathon Roadmap
+- Expand to workplace participation campaigns
+- Add sponsor participation modules
+- Add recurring participation incentives and reputation
+- Improve Indexer query patterns and open-source Indexer tooling
+- Add stablecoin settlement for real-world event offset funding
