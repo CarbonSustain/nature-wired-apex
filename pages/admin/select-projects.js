@@ -30,6 +30,16 @@ export default function SelectProjects() {
     verification: [],
     health_social_equity: [],
     sdgs: [],
+    methodology: [
+      { value: "VM0047", label: "VM0047 – ARR" },
+      { value: "VM0033", label: "VM0033 – Tidal Wetlands" },
+      { value: "VM0042", label: "VM0042 – REDD+" },
+      { value: "VM0050", label: "VM0050 – Soil Carbon" },
+      { value: "TPDDTEC", label: "TPDDTEC – Clean Water" },
+      { value: "ATEC", label: "ATEC – Energy" },
+      { value: "AMS II.C", label: "AMS II.C – Energy Efficiency" },
+      { value: "BCarbon", label: "BCarbon – Blue Carbon" },
+    ],
   });
   const [sdgNameMap, setSdgNameMap] = useState({}); // id/name → name
   const [loadingFilters, setLoadingFilters] = useState(true);
@@ -43,6 +53,7 @@ export default function SelectProjects() {
     verification: [],
     health_social_equity: [],
     sdgs: [],
+    methodology: [],
   });
 
   // Projects + selection
@@ -92,13 +103,14 @@ export default function SelectProjects() {
         });
 
         if (mounted) {
-          setFilterOptions({ ...fo, sdgs: sdgOpts });
+          setFilterOptions(prev => ({ ...prev, ...fo, sdgs: sdgOpts }));
           setSdgNameMap(m);
         }
       } catch (e) {
         console.error("Filter/SDG load error:", e);
         if (mounted) {
-          setFilterOptions({
+          setFilterOptions(prev => ({
+            ...prev,
             funding_target: [],
             timeframe: [],
             region: [],
@@ -106,7 +118,7 @@ export default function SelectProjects() {
             verification: [],
             health_social_equity: [],
             sdgs: [],
-          });
+          }));
           setSdgNameMap({});
         }
       } finally {
@@ -127,7 +139,8 @@ export default function SelectProjects() {
         (f.project_type?.length || 0) +
         (f.verification?.length || 0) +
         (f.health_social_equity?.length || 0) +
-        (f.sdgs?.length || 0) >
+        (f.sdgs?.length || 0) +
+        (f.methodology?.length || 0) >
       0
     );
   }, [filters]);
@@ -148,17 +161,16 @@ export default function SelectProjects() {
             region: filters.region,
             project_type: filters.project_type,
             verification: filters.verification,
-            sdgs: filters.sdgs, // send names as selected
+            sdgs: filters.sdgs,
             health_social_equity: filters.health_social_equity,
+            methodology: filters.methodology,
           };
           list = await filterProjects(apiBase, payload);
         }
 
-        // Map for display and ensure safe description concat
         const mapped = (list || []).map(p => {
-          const safeDescPieces = normalizeList([p.primarySector, p.project_types, p.standards]);
-          const desc = p.description || safeDescPieces.join(" ").trim() || "Project details available";
-          return mapProjectForDisplay({ ...p, description: desc });
+          const description = extractCardDescription(p);
+          return mapProjectForDisplay({ ...p, description });
         });
 
         if (mounted) setProjects(mapped);
@@ -181,10 +193,20 @@ export default function SelectProjects() {
       const res = await fetch(`${apiBase}/project/resync`, { method: "POST" });
       const body = await res.json();
       if (!res.ok) throw new Error(body?.error || "Resync failed");
-      setResyncMessage(`Resync started: ${body.data?.deleted ?? 0} old projects removed. New projects are loading from the blockchain — this may take a minute.`);
-      // Poll for new projects: refresh the list after 5s and 15s
-      setTimeout(() => setProjectRefreshKey(k => k + 1), 5000);
-      setTimeout(() => setProjectRefreshKey(k => k + 1), 15000);
+
+      // Immediately display the blockchain projects returned by the endpoint
+      const blockchainProjects = body.data?.projects || [];
+      if (blockchainProjects.length > 0) {
+        const mapped = blockchainProjects.map(p => {
+          const description = extractCardDescription(p);
+          return mapProjectForDisplay({ ...p, description });
+        });
+        setProjects(mapped);
+        setResyncMessage(`Loaded ${mapped.length} projects from blockchain. Database is syncing in the background.`);
+      } else {
+        setResyncMessage(`Refresh complete. Reloading projects from database...`);
+        setProjectRefreshKey(k => k + 1);
+      }
     } catch (e) {
       setResyncMessage(`Error: ${e.message}`);
     } finally {
@@ -202,7 +224,7 @@ export default function SelectProjects() {
   };
 
   const isSelected = id => !!selectedProjects.find(p => p.id === id);
-  const toggleExpand = id => setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
+  const toggleExpand = key => setExpanded(prev => ({ ...prev, [key]: !prev[key] }));
 
   const handleBack = () => router.push("/admin/create");
 
@@ -399,6 +421,21 @@ export default function SelectProjects() {
                 closeMenuOnSelect={false}
               />
             </div>
+
+            {/* Methodology */}
+            <div>
+              <label className="block font-medium mb-1">Methodology</label>
+              <Select
+                isMulti
+                options={filterOptions.methodology}
+                value={filterOptions.methodology.filter(o => filters.methodology.includes(o.value))}
+                onChange={sel => setFilters(p => ({ ...p, methodology: (sel || []).map(o => o.value) }))}
+                classNamePrefix="select"
+                styles={multiSelectStyles}
+                placeholder="Select methodology..."
+                closeMenuOnSelect={false}
+              />
+            </div>
           </div>
         </div>
 
@@ -411,9 +448,10 @@ export default function SelectProjects() {
             <div className="text-gray-700">No matching projects found.</div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {projects.map(p => {
+              {projects.map((p, idx) => {
+                const expandKey = makeProjectKey(p, idx);
                 const selected = isSelected(p.id);
-                const show = !!expanded[p.id];
+                const show = !!expanded[expandKey];
 
                 // Normalize chips from any shape
                 const regions = normalizeList(p.region ?? p.regions ?? p.location);
@@ -424,7 +462,7 @@ export default function SelectProjects() {
 
                 return (
                   <div
-                    key={p.id}
+                    key={expandKey}
                     className={`border rounded-lg p-4 hover:bg-gray-50 transition ${
                       selected ? "ring-2 ring-green-500" : ""
                     }`}
@@ -436,19 +474,19 @@ export default function SelectProjects() {
                         {/* chips */}
                         <div className="flex flex-wrap gap-2 mt-2">
                           {regions.map((label, i) => (
-                            <Chip key={`r-${p.id}-${i}`} label={label} cls="border-gray-500 text-gray-800" />
+                            <Chip key={`r-${expandKey}-${i}`} label={label} cls="border-gray-500 text-gray-800" />
                           ))}
                           {types.map((label, i) => (
-                            <Chip key={`t-${p.id}-${i}`} label={label} cls="border-purple-500 text-purple-800" />
+                            <Chip key={`t-${expandKey}-${i}`} label={label} cls="border-purple-500 text-purple-800" />
                           ))}
                           {verifs.map((label, i) => (
-                            <Chip key={`v-${p.id}-${i}`} label={label} cls="border-emerald-500 text-emerald-800" />
+                            <Chip key={`v-${expandKey}-${i}`} label={label} cls="border-emerald-500 text-emerald-800" />
                           ))}
                           {equities.map((label, i) => (
-                            <Chip key={`e-${p.id}-${i}`} label={label} cls="border-rose-500 text-rose-800" />
+                            <Chip key={`e-${expandKey}-${i}`} label={label} cls="border-rose-500 text-rose-800" />
                           ))}
                           {sdgs.map((label, i) => (
-                            <Chip key={`s-${p.id}-${i}`} label={label} cls="border-blue-500 text-blue-700" />
+                            <Chip key={`s-${expandKey}-${i}`} label={label} cls="border-blue-500 text-blue-700" />
                           ))}
                         </div>
                       </div>
@@ -465,7 +503,7 @@ export default function SelectProjects() {
                           </a>
                         )}
                         <button
-                          onClick={() => toggleExpand(p.id)}
+                          onClick={() => toggleExpand(expandKey)}
                           className="text-xs px-2 py-1 rounded border border-gray-300 hover:bg-gray-100"
                         >
                           {show ? "Hide Detail" : "View Detail"}
@@ -711,4 +749,43 @@ function getNullKeys(project) {
   return Object.keys(project)
     .filter(k => isNullish(project[k]))
     .sort((a, b) => a.localeCompare(b));
+}
+
+function makeProjectKey(project, idx) {
+  const raw =
+    project?.id ??
+    project?.uniqueId ??
+    project?.projectId ??
+    project?.project_id ??
+    project?.projectName ??
+    project?.name ??
+    idx;
+  return String(raw);
+}
+
+function extractCardDescription(p) {
+  const s = v => (typeof v === "string" && v.trim().length ? v.trim() : null);
+
+  const direct = s(p?.description);
+  if (direct) return direct;
+
+  const pd = p?.projectDescription;
+  const pdet = p?.project_details;
+
+  const g132 =
+    (pd && typeof pd === "object" ? s(pd?.G132) : null) ??
+    (pdet && typeof pdet === "object" ? s(pdet?.G132) : null);
+  if (g132) return g132.length > 300 ? g132.slice(0, 300) + "..." : g132;
+
+  const standardsDesc =
+    (p?.standards && typeof p.standards === "object" ? s(p.standards?.description) : null) ??
+    s(p?.vcs_project_description) ??
+    s(p?.summary) ??
+    s(p?.["Project Description"]);
+  if (standardsDesc) return standardsDesc.length > 300 ? standardsDesc.slice(0, 300) + "..." : standardsDesc;
+
+  const bits = [p?.primarySector, p?.project_types, p?.standards].map(textify).map(x => String(x).trim()).filter(Boolean);
+  if (bits.length) return bits.join(" ").slice(0, 300) + (bits.join(" ").length > 300 ? "..." : "");
+
+  return "Project details available";
 }

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import SidebarLayout from "../../components/SidebarLayout";
 import { formatDate } from "@/utils/dateUtils";
+import { authenticatedApiCall, getCurrentSessionData } from "@/utils/backendAuth";
+import { getUserByEmail } from "@/utils/api";
+import { getGoogleUser } from "@/utils/googleAuth";
 
 export default function DashboardPage() {
   const [campaigns, setCampaigns] = useState([]);
@@ -8,6 +11,9 @@ export default function DashboardPage() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [actionLoading, setActionLoading] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const API_BASE = process.env.NEXT_PUBLIC_NATUREWIRED_API;
   useEffect(() => {
@@ -80,6 +86,21 @@ export default function DashboardPage() {
     fetchData();
   }, [API_BASE]);
 
+  useEffect(() => {
+    const checkAdmin = async () => {
+      try {
+        const gUser = getGoogleUser();
+        if (!gUser?.email) { setIsAdmin(false); return; }
+        const user = await getUserByEmail(gUser.email);
+        const roleId = user?.data?.role_id || user?.data?.role?.id;
+        setIsAdmin(roleId === 1);
+      } catch {
+        setIsAdmin(false);
+      }
+    };
+    checkAdmin();
+  }, []);
+
   const getStatusCount = (items, status) => items.filter(item => item.status === status).length;
   const getCampaignStatusCount = (campaigns, statusId) =>
     campaigns.filter(campaign => campaign.campaignStatusId === statusId).length;
@@ -102,8 +123,64 @@ export default function DashboardPage() {
     }
   };
 
+  // Calls the endpoint with auth if a session exists, otherwise falls back to plain fetch.
+  // Never throws from the auth check itself.
+  const apiCall = async (endpoint, options = {}) => {
+    if (getCurrentSessionData()) {
+      return authenticatedApiCall(endpoint, options);
+    }
+    const url = `${API_BASE}${endpoint}`;
+    const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+    return fetch(url, { ...options, headers });
+  };
+
+  const handleApprove = async (id) => {
+    try {
+      setActionLoading(true);
+      setActionMessage("");
+      await apiCall(`/campaign-status/update/${id}`, {
+        method: "PUT",
+        body: JSON.stringify({ action: "approve" }),
+      });
+      await apiCall(`/campaign-status/handle-status-update?campaignId=${id}`, { method: "GET" });
+      const campaignsRes = await fetch(`${API_BASE}/campaign`);
+      if (campaignsRes.ok) {
+        const data = await campaignsRes.json();
+        setCampaigns(Array.isArray(data.data) ? data.data : []);
+      }
+      setActionMessage("Approved successfully");
+    } catch (e) {
+      setActionMessage(`Failed to approve: ${e.message}`);
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleReject = async (id) => {
+    try {
+      setActionLoading(true);
+      setActionMessage("");
+      await apiCall(`/campaign-status/update/${id}`, {
+        method: "PUT",
+        body: JSON.stringify({ action: "reject" }),
+      });
+      const campaignsRes = await fetch(`${API_BASE}/campaign`);
+      if (campaignsRes.ok) {
+        const data = await campaignsRes.json();
+        setCampaigns(Array.isArray(data.data) ? data.data : []);
+      }
+      setActionMessage("Rejected successfully");
+    } catch (e) {
+      setActionMessage(`Failed to reject: ${e.message}`);
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
   const mostRecentCampaign = [...campaigns].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
   const mostVotedCampaign = [...campaigns].sort((a, b) => (b.votes || 0) - (a.votes || 0))[0];
+  const pendingStatus = campaignStatuses.find(s => s.name && s.name.toLowerCase() === "pending");
+  const pendingCampaigns = pendingStatus ? campaigns.filter(c => c.campaignStatusId === pendingStatus.id) : [];
 
   return (
     <SidebarLayout>
@@ -244,6 +321,45 @@ export default function DashboardPage() {
                     }
                   />
                 </div>
+
+                {isAdmin && (
+                <div className="mt-10">
+                  <h2 className="text-lg font-bold mb-4">Pending Campaigns</h2>
+                  {actionMessage && (
+                    <div className="mb-4 text-sm text-gray-700">{actionMessage}</div>
+                  )}
+                  {pendingCampaigns.length === 0 ? (
+                    <div className="text-sm text-gray-500">No pending campaigns.</div>
+                  ) : (
+                    <div className="space-y-3">
+                      {pendingCampaigns.map(c => (
+                        <div key={c.id} className="flex items-center justify-between bg-white p-4 rounded shadow">
+                          <div>
+                            <div className="font-semibold">{c.name}</div>
+                            <div className="text-sm text-gray-600">Ends: {formatDate(c.endDate)}</div>
+                          </div>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => handleApprove(c.id)}
+                              disabled={actionLoading}
+                              className="px-3 py-2 rounded bg-green-600 text-white hover:bg-green-700 disabled:opacity-50"
+                            >
+                              Approve
+                            </button>
+                            <button
+                              onClick={() => handleReject(c.id)}
+                              disabled={actionLoading}
+                              className="px-3 py-2 rounded bg-red-600 text-white hover:bg-red-700 disabled:opacity-50"
+                            >
+                              Reject
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                )}
               </>
             )}
           </>
