@@ -11,7 +11,7 @@ const PAGES = [
   { path: '/admin/active', title: 'Campaigns' },
   // { path: '/admin/voting', title: 'Voting Management' },
   // { path: '/admin/pending', title: 'Pending Votes' },
-  // { path: '/admin/export', title: 'Export Data' },
+  { path: '/admin/export', title: 'Export Data' },
   { path: '/admin/recommended-projects', title: 'Recommended Projects' },
   { path: '/admin/launch-voting-campaign', title: 'Launch Voting Campaign' },
   { path: '/admin/approved-campaigns', title: 'Approved Campaigns' },
@@ -93,8 +93,8 @@ export default function Sidebar() {
         <li><Link href="/admin/create" className="block p-2 hover:bg-gray-700 rounded">Create Campaign</Link></li>
         <li><Link href="/admin/active" className="block p-2 hover:bg-gray-700 rounded">Campaigns</Link></li>
         {/* <li><Link href="/admin/voting" className="block p-2 hover:bg-gray-700 rounded">Voting Management</Link></li>
-        <li><Link href="/admin/pending" className="block p-2 hover:bg-gray-700 rounded">Pending Votes</Link></li>
-        <li><Link href="/admin/export" className="block p-2 hover:bg-gray-700 rounded">Export Data</Link></li> */}
+        <li><Link href="/admin/pending" className="block p-2 hover:bg-gray-700 rounded">Pending Votes</Link></li> */}
+        <li><Link href="/admin/export" className="block p-2 hover:bg-gray-700 rounded">Export Data</Link></li>
         <li><Link href="/admin/approved-campaigns" className="block p-2 hover:bg-gray-700 rounded">Approved Campaigns</Link></li>
       </ul>
       

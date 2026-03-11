@@ -202,7 +202,7 @@ export default function SelectProjects() {
           return mapProjectForDisplay({ ...p, description });
         });
         setProjects(mapped);
-        setResyncMessage(`Loaded ${mapped.length} projects from blockchain. Database is syncing in the background.`);
+        setResyncMessage(`Loaded ${mapped.length} projects. Database is syncing in the background.`);
       } else {
         setResyncMessage(`Refresh complete. Reloading projects from database...`);
         setProjectRefreshKey(k => k + 1);
