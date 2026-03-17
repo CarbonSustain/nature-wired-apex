@@ -173,7 +173,7 @@ The platform integrates directly with the Hedera Guardian ecosystem to ensure th
 - Tech Stack: The solution is built with a Node.js backend and a Next.js frontend, providing a robust and scalable architecture for real-world sports partnerships.
 
 **5. The "Game Moments" & Participation Display Logic**
-The platform uses key game intervals to drive fan engagement and display real-time participation metrics. While the Acme Sport Drinks Co. sustainability budget ($5,000) is a pre-committed figure, these "Game Moments" serve as milestones to reveal the current impact data and the projected proportional allocation.
+The platform uses key game intervals to drive fan engagement and display real-time participation metrics. While Acme Sports Drinks Co. pre-commits $5,000 per game as part of a $100,000 season-long sustainability commitment, these “Game Moments” act as live milestones—revealing participation data and shaping the projected proportional allocation across projects.
 
 **Kickoff – Engagement Milestone 1**: The sponsor reveals the first phase of the sustainability experience on the stadium big screen. The platform begins aggregating the number of backers to show early fan sentiment.
 
