@@ -1,139 +1,75 @@
-# Apex Hackathon 2026 — Hackathon Scope (Nature Backers)
+Apex Hackathon Demo Scenario
+This submission demonstrates a Women’s Flag Football game activation in the San Francisco Bay Area.
 
-## Project Name
-**Nature Backers — Guardian-Powered Engagement Layer for Verified Nature Projects**
+Sponsor-Curated Projects
+Before the event, Acme Sports Drinks Company, the corporate sponsor, selects three sustainability projects aligned with their sustainability priorities and goals. Nature Backers integrates with the Hedera Guardian Global Indexer to discover verified sustainability projects based on methodology, SDG alignment, and geographic location. For the Apex Hackathon demo, three example environmental initiatives are presented to fans as sponsor-curated projects. These illustrate how Guardian-indexed projects could be surfaced for event participants in a live sports setting.
 
-## Hackathon Track
-**Theme 3: Sustainability**
+Fan Journey
+Scan QR code at the stadium
+Explore three sponsor-selected sustainability projects
+Learn about impact and volunteer opportunities
+Back one project during the game
+Receive a digital participation token
+Results allocate sponsor funding proportionally
+Hedera Integration
+Nature Backers leverages Hedera network services to provide transparency, scalability, and verifiable participation.
 
-## Goal of the Hackathon MVP
-Build and demo a working MVP that showcases Nature Backers as an engagement layer on top of the Hedera Guardian ecosystem, using a fictitious tech event scenario where attendees can browse verified projects, back a project, and receive an on-chain proof-of-participation token/NFT.
+Hedera Consensus Service (HCS) records participation events
+Hedera Token Service (HTS) issues digital participation tokens
+Hedera Guardian ecosystem supports verified sustainability projects
+What We Built During the Hackathon
+This submission builds on the existing Nature Backers MVP (originally designed for employee sustainability engagement) and adapts the platform to engagement during live women's sports events.
 
-This MVP is focused on participation and transparency, not on financial settlement or marketplace flows.
+Hackathon deliverables include:
 
----
+Linking to the Guardian Indexer Mainnet
+Creating the Women's Flag Football sustainability activation scenario
+New QR-based fan onboarding experience
+sponsor-curated project discovery interface
+project backing interaction
+New digital participation token issuance
+Hedera transaction recording for engagement events
+New fan participation results dashboard
+updated GitHub documentation and deployment guides
 
-## Demo Scenario (Fictitious Event Use Case)
-A tech conference commits to offsetting its event footprint through verified nature-based projects.  
-To increase transparency and attendee engagement, the event invites attendees to participate by exploring verified projects and backing the one they want the event to support.
+Tech Stack
+Hedera Services
 
-Attendees interact through a simple mobile-friendly experience (QR onboarding).
+Hedera Consensus Service (HCS)
+Hedera Token Service (HTS)
+Hedera Guardian ecosystem compatibility
+Application Stack
 
----
+Node.js backend
+Next.js frontend
+QR-based onboarding flow
+Digital wallet integration
+Technical Architecture: Fan-Powered Sustainability Experiences
+Nature Backers for Women’s Sports leverages the Hedera network to bridge the gap between corporate sustainability investments and fan engagement. The architecture is designed for high-concurrency stadium environments, ensuring that every fan action is verifiable, transparent, and rewarding.
 
-## Core MVP User Flow (Demo Flow)
-1. User scans event QR code and opens the Nature Backers event page  
-2. User browses verified nature-based sustainability projects  
-3. User views project details (SDGs, location, verification info, impact highlights)  
-4. User selects a project to “Back”  
-5. User connects a wallet (HashPack / Blade / WalletConnect)  
-6. User receives a token/NFT proof-of-participation  
-7. Organizer dashboard updates to show backing results and engagement analytics
+1. Hedera Consensus Service (HCS): Immutable Participation Tracking Every interaction within the 4-step fan journey—from backing a project to expressing volunteer interest—is recorded as a unique message on HCS.
 
----
+Verifiable Events: Each fan "vote" is anchored on-chain with a consensus timestamp, preventing manipulation of the final funding allocation.
+Transparency: The Impact Dashboard consumes these HCS messages in real-time to display the live percentage allocation of the $5,000 Acme Sport Drinks Co. pool.
+2. Hedera Token Service (HTS): Digital "Proof of Impact" Tokens To drive long-term loyalty and mainstream exposure, the platform uses HTS to issue unique digital participation tokens.
 
-## Must-Have Features (Hackathon MVP)
-### 1. Event Participation UX (Front End)
-- Event landing page
-- Project browse / listing view
-- Project detail view
-- Back / vote action flow
-- Confirmation view
+Token Issuance: Upon completing the backing process, fans receive a token in their digital wallet (e.g., HashPack or MetaMask).
+Programmable Assets: These tokens serve as a verifiable "Proof of Impact," which can evolve into rewards or access tiers in future roadmap versions.
+3. Hedera Guardian & Global Indexer: Verified Project Discovery The platform integrates directly with the Hedera Guardian ecosystem to ensure the projects presented to fans are high-integrity and verified.
 
-### 2. Verified Project Data Integration
-- Pull project listings from Guardian Indexer / Global Indexer  
-  OR
-- Use a “lite” integration approach for verified project data if Indexer access is limited
+Mainnet Discovery: During the hackathon, we integrated the Guardian Global Indexer on the Hedera Mainnet to dynamically discover sustainability initiatives.
+Selection Criteria: Sponsors like Acme Sport Drinks Co. curate projects based on methodology, SDG alignment, and geographic location (e.g., San Francisco Bay Area initiatives).
+Data Normalization: Our backend normalizes project metadata and correlates multiple Verifiable Credential (VC) queries from the Guardian Indexer to present fans with a simple, high-impact interface.
+4. Technical Implementation & Optimization
 
-### 3. Wallet Integration (NEW)
-- Wallet connect experience for participants
-- Display connected wallet address / session
+Low-Latency Experience: Given the nature of live sporting events, we implemented client-side caching to ensure a seamless mobile UI even in high-traffic stadium environments.
+Mobile-First Onboarding: A custom QR-based onboarding flow allows fans to join the experience instantly without complex registration, supporting "Guest" modes for those without pre-existing wallets.
+Tech Stack: The solution is built with a Node.js backend and a Next.js frontend, providing a robust and scalable architecture for real-world sports partnerships.
+5. The "Game Moments" & Participation Display Logic The platform uses key game intervals to drive fan engagement and display real-time participation metrics. While Acme Sports Drinks Co. pre-commits $5,000 per game as part of a $100,000 season-long sustainability commitment, these “Game Moments” act as live milestones—revealing participation data and shaping the projected proportional allocation across projects.
 
-### 4. Token / NFT Proof-of-Participation (NEW)
-- Mint or issue a participation token/NFT when a project is backed
-- Token/NFT metadata should include:
-  - Event name
-  - Project name / ID
-  - Timestamp
-  - SDG tags (if available)
+Kickoff – Engagement Milestone 1: The sponsor reveals the first phase of the sustainability experience on the stadium big screen. The platform begins aggregating the number of backers to show early fan sentiment.
 
-### 5. Engagement Analytics Dashboard
-- Live project backing totals
-- Simple leaderboard / ranking view
-- Analytics breakdown by:
-  - Project
-  - SDG
-  - Region (if available)
+Halftime – Participation Update: At the mid-game break, the sponsor displays updated metrics: the total number of fans who have "backed" a project and the number of fans who have expressed interest in volunteering.
 
----
+Final Whistle – Verifiable Results: At the end of the game, the platform calculates the final proportional allocation based on the HCS-recorded participation data. This serves as the verifiable instruction for how the sponsor’s pre-committed funds will be distributed among the three projects, ensuring the final sustainability investment directly reflects the collective preference of the fans.
 
-## Nice-to-Have Features (If Time Allows)
-### AI Layer (Optional)
-- AI-based project recommendation based on attendee preferences
-  OR
-- AI-based summary generation (turn project metadata into a short human-readable story)
-
-### Admin / Organizer Export
-- Export backing results to CSV
-- Export simple event report summary
-
-### Multi-Event Support
-- Ability to define an event campaign ID and filter engagement by event
-
----
-
-## Out of Scope (Explicitly Not Built in Hackathon MVP)
-- Stablecoin settlement or purchasing offsets directly
-- Marketplace flows (buy/sell/retire credits)
-- Compliance or registry integration beyond Guardian project discovery
-- Full identity / KYC onboarding
-- Advanced tokenomics or speculative reward mechanics
-
----
-
-## Technical Scope Notes
-### Existing Foundation (Reuse)
-This hackathon submission builds on the existing Nature Backers MVP foundation, including:
-- AWS-hosted backend services
-- Existing GitHub codebase and architecture patterns
-- Prior Indexer client work and query documentation
-- Existing UI concepts and Figma designs
-
-### New Development Areas
-Hackathon-specific additions include:
-- Wallet connection workflow
-- HTS token/NFT issuance logic
-- Event-based UX flow implementation
-- Minimal analytics reporting views
-
----
-
-## Definition of Done (Hackathon Completion Criteria)
-The submission is considered complete if the team can demonstrate:
-
-- A working live deployment with event participation UI
-- Verified project listings visible in the app
-- Wallet connect works end-to-end
-- Backing a project triggers token/NFT issuance
-- Dashboard updates and shows results
-- GitHub repo includes clear documentation + deployment instructions
-- A recorded demo video and pitch deck are included
-
----
-
-## Expected Submission Artifacts
-- GitHub repo (public)
-- Working demo URL
-- Demo video (YouTube)
-- Pitch deck PDF
-- README with setup + testing instructions
-- Hackathon-specific documentation (this file, architecture notes, etc.)
-
----
-
-## Post-Hackathon Roadmap
-- Expand to workplace participation campaigns
-- Add sponsor participation modules
-- Add recurring participation incentives and reputation
-- Improve Indexer query patterns and open-source Indexer tooling
-- Add stablecoin settlement for real-world event offset funding
