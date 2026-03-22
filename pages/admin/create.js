@@ -15,6 +15,7 @@ export default function CreateCampaign() {
     votingStyle: "TOKEN_BASED",
     startDateLocal: "", // datetime-local
     endDateLocal: "", // datetime-local
+    gameEvent: "",
     departmentIds: [],
   });
 
@@ -37,6 +38,7 @@ export default function CreateCampaign() {
           votingStyle: draft.votingStyle || "TOKEN_BASED",
           startDateLocal: toLocalDatetime(draft.startDateISO || draft.startDate) || "",
           endDateLocal: toLocalDatetime(draft.endDateISO || draft.endDate) || "",
+          gameEvent: draft.gameEvent || "",
           departmentIds: Array.isArray(draft.departmentIds) ? draft.departmentIds : [],
         }));
         setBrandingFileName(draft.brandingFileName || "");
@@ -131,6 +133,7 @@ export default function CreateCampaign() {
       votingStyle: form.votingStyle,
       startDateISO,
       endDateISO,
+      gameEvent: form.gameEvent,
       departmentIds: form.departmentIds,
       brandingFileName,
       brandingPreviewDataUrl,
@@ -217,6 +220,22 @@ export default function CreateCampaign() {
                 className="w-full border rounded p-2"
               />
             </div>
+          </div>
+
+          {/* Game Events */}
+          <div>
+            <label className="block font-medium mb-1">Game Events</label>
+            <select
+              name="gameEvent"
+              value={form.gameEvent}
+              onChange={onChange}
+              className="w-full border rounded p-2"
+            >
+              <option value="">Select a game event…</option>
+              <option value="flag-football-game-night-sf">Flag Football Game Night - San Francisco, CA</option>
+              <option value="flag-football-classic-la">Flag Football Classic - Los Angeles, CA</option>
+              <option value="flag-football-championships-westfield">Flag Football Championships - Westfield, IN</option>
+            </select>
           </div>
 
           {/* Departments */}

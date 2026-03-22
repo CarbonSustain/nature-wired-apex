@@ -15,6 +15,8 @@ const PAGES = [
   { path: '/admin/recommended-projects', title: 'Recommended Projects' },
   { path: '/admin/launch-voting-campaign', title: 'Launch Voting Campaign' },
   { path: '/admin/approved-campaigns', title: 'Approved Campaigns' },
+  { path: '/admin/rewards', title: 'Rewards' },
+  { path: '/admin/funding-milestones', title: 'Funding Milestones' },
   { path: '/', title: 'Home' },
 ];
 
@@ -96,6 +98,8 @@ export default function Sidebar() {
         <li><Link href="/admin/pending" className="block p-2 hover:bg-gray-700 rounded">Pending Votes</Link></li> */}
         <li><Link href="/admin/export" className="block p-2 hover:bg-gray-700 rounded">Export Data</Link></li>
         <li><Link href="/admin/approved-campaigns" className="block p-2 hover:bg-gray-700 rounded">Approved Campaigns</Link></li>
+        <li><Link href="/admin/rewards" className="block p-2 hover:bg-gray-700 rounded">Rewards</Link></li>
+        <li><Link href="/admin/funding-milestones" className="block p-2 hover:bg-gray-700 rounded">Funding Milestones</Link></li>
       </ul>
       
       {/* Sign Out Button */}
