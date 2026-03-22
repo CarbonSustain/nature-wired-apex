@@ -8,10 +8,9 @@ export default NextAuth({
       clientSecret: process.env.AUTH_GOOGLE_SECRET || process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  secret: process.env.AUTH_SECRET,
+  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },
-  baseUrl: process.env.AUTH_URL || "https://app.naturewired.earth",
-  debug: process.env.NODE_ENV === "development",
+  debug: process.env.NODE_ENV !== "production",
 });
