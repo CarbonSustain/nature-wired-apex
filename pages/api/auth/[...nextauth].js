@@ -1,6 +1,10 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+// NextAuth reads NEXTAUTH_URL from the actual Lambda process.env at runtime.
+// This ensures it's available even if Amplify doesn't inject it into the Lambda.
+process.env.NEXTAUTH_URL = process.env.NEXTAUTH_URL || "https://main.d2falv1xg02otc.amplifyapp.com";
+
 export default NextAuth({
   providers: [
     GoogleProvider({
