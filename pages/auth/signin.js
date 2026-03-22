@@ -44,9 +44,10 @@ export default function SignIn() {
         localStorage.setItem('redirectCampaignId', extractedCampaignId);
       }
 
+      const origin = window.location.origin;
       const callbackUrl = extractedCampaignId
-        ? `/vote/campaign?campaign=${extractedCampaignId}&source=email`
-        : '/admin/dashboard';
+        ? `${origin}/vote/campaign?campaign=${extractedCampaignId}&source=email`
+        : `${origin}/admin/dashboard`;
       const result = await signIn('google', {
         callbackUrl,              // ← 相對路徑即可
         redirect: true,
