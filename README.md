@@ -1,7 +1,7 @@
 # Nature Backers for Women’s Sports
 ### Hedera Hello Future Apex Hackathon 2026 — Sustainability Track 
 
-Nature Backers for Women’s Sports is a sustainability engagement layer connecting women’s sports, sponsors, and verified environmental projects. Built on Hedera and integrated with the Hedera Guardian ecosystem, sponsors discover environmental initiatives indexed on the Guardian Global Indexer and present them to fans during live sporting events.
+Nature Backers for Women’s Sports is a sustainability engagement layer that connects sponsors, fans and verified environmental projects through live event experiences. Built on Hedera and integrated with the Hedera Guardian ecosystem, sponsors discover environmental initiatives indexed on the Guardian Global Indexer and present a curated set of projects to fans during events.
 
 ## Problem
 
