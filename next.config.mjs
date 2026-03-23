@@ -1,5 +1,7 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -25,26 +27,24 @@ const nextConfig = {
   },
 
   webpack: (config, { isServer }) => {
-    // Force ALL @walletconnect imports to resolve to root-level versions,
-    // preventing duplicate bundling of nested copies (which causes "let n" / "Identifier already declared" collision)
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@walletconnect/core": require.resolve("@walletconnect/core"),
-      "@walletconnect/utils": require.resolve("@walletconnect/utils"),
-      "@walletconnect/heartbeat": require.resolve("@walletconnect/heartbeat"),
-      "@walletconnect/jsonrpc-ws-connection": require.resolve("@walletconnect/jsonrpc-ws-connection"),
-      "@walletconnect/jsonrpc-provider": require.resolve("@walletconnect/jsonrpc-provider"),
-      "@walletconnect/jsonrpc-types": require.resolve("@walletconnect/jsonrpc-types"),
-      "@walletconnect/types": require.resolve("@walletconnect/types"),
-      "@walletconnect/logger": require.resolve("@walletconnect/logger"),
-      "@walletconnect/sign-client": require.resolve("@walletconnect/sign-client"),
-      "@walletconnect/window-metadata": require.resolve("@walletconnect/window-metadata"),
-      "@walletconnect/window-getters": require.resolve("@walletconnect/window-getters"),
-      "@walletconnect/safe-json": require.resolve("@walletconnect/safe-json"),
-      "@walletconnect/relay-auth": require.resolve("@walletconnect/relay-auth"),
-    };
-
     if (!isServer) {
+      // @hashgraph/hedera-wallet-connect ships browser-esm.js which ends with
+      // `export{...}`. Webpack detects this as ESM and generates `let` declarations
+      // for all exported live bindings. The SWC minifier then renames two of them
+      // to the same letter `n`, producing `let n,n` — an illegal duplicate binding
+      // that throws SyntaxError in the browser and crashes the entire lazy chunk.
+      //
+      // Fix: point webpack directly at browser-cjs.js (same content, CJS format).
+      // Webpack wraps CJS in a `function` scope without ESM live-binding `let`
+      // declarations, so the minifier renaming collision never occurs.
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "@hashgraph/hedera-wallet-connect": path.resolve(
+          __dirname,
+          "node_modules/@hashgraph/hedera-wallet-connect/dist/browser-cjs.js"
+        ),
+      };
+
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
