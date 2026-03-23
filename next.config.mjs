@@ -25,15 +25,23 @@ const nextConfig = {
   },
 
   webpack: (config, { isServer }) => {
-    // Force all @walletconnect imports to resolve to root-level versions,
-    // preventing duplicate bundling of nested copies (which causes "let n" collision)
+    // Force ALL @walletconnect imports to resolve to root-level versions,
+    // preventing duplicate bundling of nested copies (which causes "let n" / "Identifier already declared" collision)
     config.resolve.alias = {
       ...config.resolve.alias,
       "@walletconnect/core": require.resolve("@walletconnect/core"),
       "@walletconnect/utils": require.resolve("@walletconnect/utils"),
       "@walletconnect/heartbeat": require.resolve("@walletconnect/heartbeat"),
       "@walletconnect/jsonrpc-ws-connection": require.resolve("@walletconnect/jsonrpc-ws-connection"),
+      "@walletconnect/jsonrpc-provider": require.resolve("@walletconnect/jsonrpc-provider"),
+      "@walletconnect/jsonrpc-types": require.resolve("@walletconnect/jsonrpc-types"),
+      "@walletconnect/types": require.resolve("@walletconnect/types"),
+      "@walletconnect/logger": require.resolve("@walletconnect/logger"),
+      "@walletconnect/sign-client": require.resolve("@walletconnect/sign-client"),
       "@walletconnect/window-metadata": require.resolve("@walletconnect/window-metadata"),
+      "@walletconnect/window-getters": require.resolve("@walletconnect/window-getters"),
+      "@walletconnect/safe-json": require.resolve("@walletconnect/safe-json"),
+      "@walletconnect/relay-auth": require.resolve("@walletconnect/relay-auth"),
     };
 
     if (!isServer) {
