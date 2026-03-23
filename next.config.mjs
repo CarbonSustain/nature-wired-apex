@@ -26,7 +26,6 @@ const nextConfig = {
         stream: false,
         util: false,
         buffer: false,
-        process: false,
       };
     }
     return config;

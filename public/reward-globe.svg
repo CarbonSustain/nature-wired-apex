@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <radialGradient id="globeGrad" cx="38%" cy="32%" r="65%">
+      <stop offset="0%" stop-color="#93c5fd"/>
+      <stop offset="60%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1e40af"/>
+    </radialGradient>
+    <clipPath id="globeClip">
+      <circle cx="60" cy="58" r="42"/>
+    </clipPath>
+  </defs>
+  <!-- Outer glow -->
+  <circle cx="60" cy="58" r="46" fill="none" stroke="#93c5fd" stroke-width="4" opacity="0.4"/>
+  <!-- Globe body -->
+  <circle cx="60" cy="58" r="42" fill="url(#globeGrad)"/>
+  <!-- Latitude lines -->
+  <g clip-path="url(#globeClip)" fill="none" stroke="white" stroke-width="1" opacity="0.4">
+    <ellipse cx="60" cy="58" rx="42" ry="14"/>
+    <ellipse cx="60" cy="58" rx="42" ry="28"/>
+    <line x1="18" y1="58" x2="102" y2="58"/>
+    <line x1="60" y1="16" x2="60" y2="100"/>
+    <!-- Slight curve longitude lines -->
+    <path d="M 60 16 Q 80 58 60 100"/>
+    <path d="M 60 16 Q 40 58 60 100"/>
+  </g>
+  <!-- Land masses (simplified continents) -->
+  <g clip-path="url(#globeClip)" fill="#34d399" opacity="0.75">
+    <!-- Americas -->
+    <path d="M 34 36 Q 28 44 30 56 Q 32 68 28 78 Q 34 80 38 72 Q 42 62 40 50 Q 44 40 38 34 Z"/>
+    <!-- Europe/Africa -->
+    <path d="M 58 30 Q 62 28 68 32 Q 70 40 66 46 Q 70 50 68 58 Q 64 68 60 74 Q 56 70 54 60 Q 52 50 56 42 Q 56 36 58 30 Z"/>
+    <!-- Asia/Aus -->
+    <path d="M 74 34 Q 84 32 90 40 Q 94 50 88 56 Q 82 58 78 54 Q 74 48 76 40 Z"/>
+    <path d="M 82 66 Q 88 64 90 70 Q 88 76 82 74 Q 78 70 82 66 Z"/>
+  </g>
+  <!-- Shine -->
+  <ellipse cx="48" cy="42" rx="10" ry="7" fill="white" opacity="0.18" transform="rotate(-20,48,42)"/>
+  <!-- Stand -->
+  <rect x="52" y="100" rx="2" ry="2" width="16" height="6" fill="#1e40af" opacity="0.7"/>
+  <rect x="44" y="106" rx="3" ry="3" width="32" height="6" fill="#1e3a8a" opacity="0.8"/>
+  <!-- Stars around globe -->
+  <text x="8" y="28" font-size="13" fill="#fbbf24">★</text>
+  <text x="100" y="28" font-size="10" fill="#fbbf24">★</text>
+  <text x="104" y="80" font-size="8" fill="#fcd34d">★</text>
+</svg>
