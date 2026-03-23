@@ -1,6 +1,7 @@
 # Nature Backers for Women’s Sports
 ### Hedera Hello Future Apex Hackathon 2026 — Sustainability Track 
 
+## Turning Women's Sports Into Fan-Powered Sustainability Experiences
 Nature Backers for Women’s Sports is a sustainability engagement layer that connects sponsors, fans and verified environmental projects through live event experiences. Built on Hedera and integrated with the Hedera Guardian ecosystem, sponsors discover environmental initiatives indexed on the Guardian Global Indexer and present a curated set of projects to fans during events.
 
 ## Problem
@@ -34,7 +35,7 @@ Fans participate through a simple mobile experience that allows them to:
 - express interest in volunteering  
 - back one project during the game  
 
-Participation signals are recorded on the Hedera network, and final fan results determine how sponsor funding is allocated across the projects.
+Fan participation is recorded on Hedera, enabling transparent and verifiable allocation of sponsor funding based on collective fan results.
 
 ## Business Model Canvas: Nature Backers for Women’s Sports
 
@@ -48,7 +49,7 @@ Participation signals are recorded on the Hedera network, and final fan results 
 
 - Primary: Corporate Sponsors in the sports and beverage industry looking for verifiable ESG engagement.
 - Secondary: Women’s Sports Leagues and Teams (e.g., Women’s Flag Football) seeking to increase fan loyalty and social impact.
-- End-Users: Socially conscious sports fans, particularly Gen Z and Millenials.
+- End-Users: Socially conscious sports fans, particularly Gen Z and Millennials.
 
 **3. Key Activities**
 
@@ -95,11 +96,19 @@ Participation signals are recorded on the Hedera network, and final fan results 
 
 This submission demonstrates a Women’s Flag Football game activation in the San Francisco Bay Area.
 
+## Demo
+
+**Live Demo** - LINK TO BE ADDED
+
+**Project Demo Video** - LINK TO BE ADDED
+
+**Pitch Deck** - LINK TO BE ADDED
+
 ## Sponsor-Curated Projects
 
 Before the event, Acme Sports Drinks Company, the corporate sponsor, selects three sustainability projects aligned with their sustainability priorities and goals.
 Nature Backers integrates with the Hedera Guardian Global Indexer to discover verified sustainability projects based on methodology, SDG alignment, and geographic location.
-For the Apex Hackathon demo, three example environmental initiatives are presented to fans as sponsor-curated projects. These illustrate how Guardian-indexed projects could be surfaced for event participants in a live sports setting.
+For the Apex Hackathon demo, three example environmental initiatives are presented to fans as Sponsor-curated projects. These illustrate how Guardian-indexed projects could be surfaced for event participants in a live sports setting.
 
 ## Fan Journey
 1. Scan QR code at the stadium
@@ -153,7 +162,7 @@ Nature Backers for Women’s Sports leverages the Hedera network to bridge the g
 
 **1. Hedera Consensus Service (HCS): Immutable Participation Tracking**
 Every interaction within the 4-step fan journey—from backing a project to expressing volunteer interest—is recorded as a unique message on HCS. 
-- Verifiable Events: Each fan "vote" is anchored on-chain with a consensus timestamp, preventing manipulation of the final funding allocation.
+- Verifiable Events: Each fan backing action is anchored on-chain with a consensus timestamp, preventing manipulation of the final funding allocation.
 - Transparency: The Impact Dashboard consumes these HCS messages in real-time to display the live percentage allocation of the $5,000 Acme Sport Drinks Co. pool.
 
 **2. Hedera Token Service (HTS): Digital "Proof of Impact" Tokens**
@@ -169,10 +178,10 @@ The platform integrates directly with the Hedera Guardian ecosystem to ensure th
 
 **4. Technical Implementation & Optimization**
 - Low-Latency Experience: Given the nature of live sporting events, we implemented client-side caching to ensure a seamless mobile UI even in high-traffic stadium environments.
-- Mobile-First Onboarding: A custom QR-based onboarding flow allows fans to join the experience instantly without complex registration, supporting "Guest" modes for those without pre-existing wallets.
+- Mobile-First Onboarding: A QR-based entry point connects fans directly to a specific game campaign, enabling instant access to sponsor-curated projects. For the demo, users are pre-registered to streamline participation, while future deployments support frictionless access via email or wallet-based identity.
 - Tech Stack: The solution is built with a Node.js backend and a Next.js frontend, providing a robust and scalable architecture for real-world sports partnerships.
 
-**5. The "Game Moments" & Participation Display Logic**
+**5. Fan Participation & Funding Unlock Logic**
 The platform uses key game intervals to drive fan engagement and display real-time participation metrics. While Acme Sports Drinks Co. pre-commits $5,000 per game as part of a $100,000 season-long sustainability commitment, these “Game Moments” act as live milestones—revealing participation data and shaping the projected proportional allocation across projects.
 
 **Kickoff – Engagement Milestone 1**: The sponsor reveals the first phase of the sustainability experience on the stadium big screen. The platform begins aggregating the number of backers to show early fan sentiment.
@@ -181,19 +190,51 @@ The platform uses key game intervals to drive fan engagement and display real-ti
 
 **Final Whistle – Verifiable Results**: At the end of the game, the platform calculates the final proportional allocation based on the HCS-recorded participation data. This serves as the verifiable instruction for how the sponsor’s pre-committed funds will be distributed among the three projects, ensuring the final sustainability investment directly reflects the collective preference of the fans.
 
-## Demo
-Live Demo: 
+**5. Fan Participation & Funding Unlock Logic**
 
-Demo Video : 
+Nature Backers turns fan participation into real-world impact through a dynamic funding unlock mechanism. Acme Sports Drinks Co. commits a $5,000 sustainability pool, which is unlocked as participation increases.
+
+**Demo Mechanics**
+For the hackathon, participation is simulated using **3 test accounts**:
+•	1 vote → $1,250 unlocked
+•	2 votes → $3,000 unlocked
+•	3 votes → $5,000 unlocked
+This simplified model demonstrates how fan actions directly trigger funding activation in real time.
+
+Real-World Scenario
+In a live event:
+•	~500 fans attend
+•	~150–200 fans participate
+Funding thresholds would scale accordingly (e.g., 50, 100, 200 participants), creating a shared, collective experience.
+
+**Game Flow**
+
+Kickoff (Demo Implementation)
+- Fans receive a QR code via email tied to the campaign.
+- Scanning the QR directs them to the web app where they log in and begin voting.
+- For the demo, users are pre-registered to streamline access.
+
+Production Experience (Future State)
+In a live deployment, participation would be designed to be frictionless, such as:
+-	Scanning QR codes displayed in-stadium (jumbotron, signage, packaging)
+-	Accessing directly via a sponsor’s mobile app or event experience
+-	Lightweight authentication (e.g., email-only or wallet-based access)
+
+Live Participation Updates
+Funding unlock milestones are displayed in real time (e.g., jumbotron or mobile UI).
+Final Whistle
+•	Funds are distributed based on fan voting results
+•	Allocation reflects collective preference
 
 ## Roadmap
-Future versions of Nature Backers for Women's Sports will expand this model to support:
+Nature Backers for Women's Sports will evolve beyond the hackathon prototype into a scalable engagement platform:
 
-- real-world sports partnerships and live event pilots
-- dynamic discovery of Guardian-indexed sustainability projects
-- AI-powered sustainability explainers and project recommendations 
-- tokenized reward tiers and recurring engagement campaigns
-- volunteer coordination and community impact tracking
+- **Live Sports Pilots**: Deploy with sponsors and women’s sports teams to validate fan participation at real events  
+- **Dynamic Guardian Integration**: Enable real-time discovery of verified projects via the Guardian Global Indexer  
+- **AI-Powered Guidance**: Provide personalized sustainability recommendations and impact explainers for fans  
+- **Tokenized Engagement**: Introduce reward tiers and repeat participation incentives using HTS  
+- **Community Activation**: Expand into volunteer coordination and measurable local impact tracking  
+
 
 ## Repository Contents
 
