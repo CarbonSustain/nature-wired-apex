@@ -2,6 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   distDir: process.env.NEXT_DIST_DIR || ".next",
+  transpilePackages: [
+    "hashconnect",
+    "@walletconnect/core",
+    "@walletconnect/utils",
+    "@walletconnect/sign-client",
+    "@walletconnect/types",
+  ],
 
   env: {
     AUTH_URL: process.env.AUTH_URL,
@@ -26,9 +33,6 @@ const nextConfig = {
         util: false,
         buffer: false,
       };
-      // Disable module concatenation to prevent duplicate identifier errors
-      // caused by hashconnect/@walletconnect packages
-      config.optimization.concatenateModules = false;
     }
     return config;
   },
