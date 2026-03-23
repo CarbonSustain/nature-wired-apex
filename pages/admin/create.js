@@ -47,7 +47,7 @@ export default function CreateCampaign() {
     } catch {}
   }, []);
 
-  // Fetch departments
+  // Fetch departments and auto-select Fans
   useEffect(() => {
     let mounted = true;
     (async () => {
@@ -56,7 +56,13 @@ export default function CreateCampaign() {
         const res = await fetch(`${API_BASE}/department`);
         const body = await res.json();
         const list = Array.isArray(body?.data) ? body.data : Array.isArray(body) ? body : [];
-        if (mounted) setDepartments(list);
+        if (mounted) {
+          setDepartments(list);
+          const fans = list.find(d => d.name?.toLowerCase() === 'fans');
+          if (fans) {
+            setForm(prev => ({ ...prev, departmentIds: [fans.id] }));
+          }
+        }
       } catch (e) {
         console.error("Department load error:", e);
         if (mounted) setDepartments([]);
@@ -238,29 +244,7 @@ export default function CreateCampaign() {
             </select>
           </div>
 
-          {/* Departments */}
-          <div>
-            <label className="block font-medium mb-2">Departments</label>
-            {loading ? (
-              <div>Loading departments…</div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                {departments.map(d => (
-                  <label key={d.id} className="flex gap-2 items-center">
-                    <input
-                      type="checkbox"
-                      checked={form.departmentIds.includes(d.id)}
-                      onChange={() => onToggleDepartment(d.id)}
-                    />
-                    <span>
-                      {d.name} <span className="text-gray-600">(ID: {d.id})</span>
-                    </span>
-                  </label>
-                ))}
-                {departments.length === 0 && <div className="text-gray-700">No departments found.</div>}
-              </div>
-            )}
-          </div>
+          {/* Departments — hidden, always defaults to Fans */}
 
           {/* Branding */}
           <div>
