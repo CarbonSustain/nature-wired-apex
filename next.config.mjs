@@ -1,3 +1,6 @@
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -22,6 +25,17 @@ const nextConfig = {
   },
 
   webpack: (config, { isServer }) => {
+    // Force all @walletconnect imports to resolve to root-level versions,
+    // preventing duplicate bundling of nested copies (which causes "let n" collision)
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@walletconnect/core": require.resolve("@walletconnect/core"),
+      "@walletconnect/utils": require.resolve("@walletconnect/utils"),
+      "@walletconnect/heartbeat": require.resolve("@walletconnect/heartbeat"),
+      "@walletconnect/jsonrpc-ws-connection": require.resolve("@walletconnect/jsonrpc-ws-connection"),
+      "@walletconnect/window-metadata": require.resolve("@walletconnect/window-metadata"),
+    };
+
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,

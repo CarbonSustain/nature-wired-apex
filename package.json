@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hashgraph/sdk": "^2.81.0",
     "hashconnect": "^3.0.14",
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",

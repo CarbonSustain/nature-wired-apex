@@ -262,8 +262,12 @@ export default function SelectProjects() {
           <div>
             <h1 className="text-2xl font-bold">Select Projects</h1>
             <p className="text-gray-700 mt-1">
-              Choose up to 3 projects for your campaign. Click a card to select/deselect. “View Detail” expands inline.
+              Choose up to 3 projects for your campaign. Click a card to select/deselect. View Detail expands inline.
             </p>
+            <div className="flex items-center gap-4 mt-3">
+              <img src="/hedera-guardian.png" alt="Hedera Guardian" className="h-8 object-contain" />
+              <img src="/mainnet.png" alt="Mainnet" className="h-8 object-contain" />
+            </div>
           </div>
           <div className="flex flex-col items-end gap-2">
             <div className="text-sm text-gray-700">Step 2 of 2</div>
