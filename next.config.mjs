@@ -16,7 +16,6 @@ const nextConfig = {
 
   webpack: (config, { isServer }) => {
     if (!isServer) {
-      // Handle Node.js modules in client-side code
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
@@ -27,6 +26,9 @@ const nextConfig = {
         util: false,
         buffer: false,
       };
+      // Disable module concatenation to prevent duplicate identifier errors
+      // caused by hashconnect/@walletconnect packages
+      config.optimization.concatenateModules = false;
     }
     return config;
   },
