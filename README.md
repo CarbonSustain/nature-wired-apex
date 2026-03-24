@@ -102,7 +102,9 @@ This submission demonstrates a Women’s Flag Football game activation in the Sa
 
 **Project Demo Video** - (https://youtu.be/EyN7TIWeKX0)
 
-**Pitch Deck** - LINK TO BE ADDED
+**Pitch Deck** - ## 📄 Pitch Deck in Docs
+
+[Download Pitch Deck](docs/Nature%20Backers_Apex%20Hackathon%20Pitch%20Deck.pdf)
 
 ## Sponsor-Curated Projects
 
