@@ -98,9 +98,9 @@ This submission demonstrates a Women’s Flag Football game activation in the Sa
 
 ## Demo
 
-**Live Demo** - LINK TO BE ADDED
+**Live Demo** -  https://main.d2falv1xg02otc.amplifyapp.com/
 
-**Project Demo Video** - LINK TO BE ADDED
+**Project Demo Video** - (https://youtu.be/EyN7TIWeKX0)
 
 **Pitch Deck** - LINK TO BE ADDED
 
