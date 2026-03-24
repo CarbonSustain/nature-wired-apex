@@ -106,6 +106,11 @@ This submission demonstrates a Women’s Flag Football game activation in the Sa
 
 [Download Pitch Deck](docs/Nature%20Backers_Apex%20Hackathon%20Pitch%20Deck.pdf)
 
+Production URLs - 
+Frontend - https://main.d2falv1xg02otc.amplifyapp.com/
+Backend - https://d5p35cby3bgug.cloudfront.net
+indexer link- https://d25djba88s4qj2.cloudfront.net
+
 ## Sponsor-Curated Projects
 
 Before the event, Acme Sports Drinks Company, the corporate sponsor, selects three sustainability projects aligned with their sustainability priorities and goals.
