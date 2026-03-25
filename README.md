@@ -98,7 +98,7 @@ This submission demonstrates a Women’s Flag Football game activation in the Sa
 
 ## Demo
 
-**Live Demo** -  https://main.d2falv1xg02otc.amplifyapp.com/
+**Live Demo** -  https://main.d2falv1xg02otc.amplifyapp.com/ 
 
 **Project Demo Video** - (https://youtu.be/EyN7TIWeKX0)
 
@@ -106,10 +106,41 @@ This submission demonstrates a Women’s Flag Football game activation in the Sa
 
 [Download Pitch Deck](docs/Nature%20Backers_Apex%20Hackathon%20Pitch%20Deck.pdf)
 
-Production URLs - 
+**Production URLs** - 
 Frontend - https://main.d2falv1xg02otc.amplifyapp.com/
 Backend - https://d5p35cby3bgug.cloudfront.net
 indexer link- https://d25djba88s4qj2.cloudfront.net
+
+**Backend Repository:** https://github.com/CarbonSustain/nature-backers-apex-backend 
+
+## Quick Start for Judges (Admin Experience)
+
+1. Open the **Live Demo**
+2. Sign in using **Google Login (any account)**
+3. Access the **Admin Dashboard**
+4. Review campaign setup and curated projects
+5. Explore menu tabs and campaign structure
+6. Watch the demo video for full fan participation flow
+
+## What You Are Viewing
+
+This demo highlights the **Admin (Sponsor) Experience**, where a corporate sponsor:
+
+- Curates sustainability projects  
+- Aligns projects with location, SDGs, and impact themes  
+- Prepares a campaign for fan participation during a live event  
+- Configures funding pool and engagement logic  
+
+## Fan Experience (Demo Note)
+
+- The live demo focuses on the **Admin setup**
+- The **Fan voting experience requires pre-registered users in the backend**
+- To avoid friction, the full fan journey is shown in the demo video  
+
+Please refer to the **demo video** to see:
+- QR code entry flow  
+- Fan voting experience  
+- Real-time funding unlock mechanics  
 
 ## Sponsor-Curated Projects
 
